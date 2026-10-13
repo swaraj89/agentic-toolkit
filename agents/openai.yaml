@@ -1,0 +1,4 @@
+interface:
+  display_name: "Year-End Performance Review"
+  short_description: "Turn Markdown evidence into clear What and How bullets"
+  default_prompt: "Use $year-end-performance-review to write my review from my Markdown files. Ask for my current role and expectations, then produce positive What and How bullets in plain text."

@@ -1,28 +1,48 @@
-# Year-End Performance Review
+# Agentic Toolkit
 
-A Codex skill that turns Markdown evidence into a positive, evidence-based year-end self-review. It uses ASD-STE100-informed wording and separates **What** you achieved from **How** you worked.
+My frequently used skills, plugins, and scripts for working with AI agents.
 
-## What it does
+## Catalog
 
-- Asks for your current role, level, responsibilities, and manager expectations.
-- Reads Markdown files containing Git history, Jira tickets, appreciation emails, and work notes.
-- Connects your contributions to supported results and relevant expectations.
-- Distinguishes your contribution from team results and avoids invented metrics.
-- Produces plain-text What and How sections with concise bullets.
+| Resource | Type | Purpose |
+| --- | --- | --- |
+| [Year-End Performance Review](skills/year-end-performance-review/SKILL.md) | Codex skill | Turn Markdown evidence into positive, evidence-based What and How bullets with ASD-STE100-informed wording. |
 
-## Install
+## Structure
 
-Clone this repository into your personal Codex skills directory:
+- `skills/<skill-name>/`: Self-contained skills, including their references, assets, and skill-specific scripts.
+- `plugins/<plugin-name>/`: Authored or customized plugins, each using its required manifest and package layout.
+- `scripts/`: Standalone utilities and helpers shared across resources.
+- [AGENTS.md](AGENTS.md): Conventions for maintaining this repository.
+
+Create plugin and script directories when their first resources are added. Keep helpers used by only one skill inside that skill.
+
+## Install a skill
+
+Clone this repository into a location you use for source repositories:
 
 ```sh
-git clone https://github.com/swaraj89/year-end-performance-review.git "${CODEX_HOME:-$HOME/.codex}/skills/year-end-performance-review"
+git clone https://github.com/swaraj89/agentic-toolkit.git
+cd agentic-toolkit
 ```
 
-If that folder already exists, use the existing installation or back it up before installing this copy.
+Copy the desired skill into your personal Codex skills directory. Run these commands from the repository root:
 
-## Use
+```sh
+skill_target="${CODEX_HOME:-$HOME/.codex}/skills"
+mkdir -p "$skill_target"
+if [ -e "$skill_target/year-end-performance-review" ]; then
+  echo 'Skill already exists. Review or back up the existing folder before replacing it.'
+else
+  cp -R skills/year-end-performance-review "$skill_target/"
+fi
+```
 
-Invoke the skill and provide the paths to your Markdown evidence:
+The installed copy is independent of this checkout. After pulling updates, review the changes and replace the installed copy when ready.
+
+## Year-End Performance Review
+
+The skill asks for your role, expectations, review dates, and Markdown evidence. It accepts Git history, Jira tickets, appreciation emails, and work notes. It distinguishes individual contributions from team results and avoids invented metrics.
 
 ```text
 Use $year-end-performance-review to write my year-end review.
@@ -30,24 +50,10 @@ Read evidence/commits.md, evidence/tickets.md, and evidence/appreciation.md.
 Ask me for my current role and expectations before drafting.
 ```
 
-You can also supply the review period, company values, performance criteria, and a word limit. Keep personal performance evidence outside this public repository.
+The final output is plain text with separate What and How bullet lists. You can supply company values, performance criteria, and a word limit.
 
-The final review follows this structure:
+Its writing style adapts ASD-STE100 clarity principles; it does not include the controlled dictionary or certify full compliance. It is not affiliated with or endorsed by ASD. See the [research notes](skills/year-end-performance-review/references/research-notes.md) for sources.
 
-```text
-What
-- [Your contribution and its supported result.]
+## Repository scope
 
-How
-- [A specific action and its supported benefit.]
-```
-
-## Files
-
-- [SKILL.md](SKILL.md): workflow and writing instructions.
-- [agents/openai.yaml](agents/openai.yaml): skill display metadata.
-- [references/research-notes.md](references/research-notes.md): research sources and rationale.
-
-## Writing approach
-
-The skill adapts clarity principles from ASD-STE100 for performance reviews. It does not include the controlled dictionary or certify full compliance. It is not affiliated with or endorsed by ASD. See the research notes for the official sources.
+Store reusable instructions and tools here. Keep personal performance evidence, credentials, generated output, and installed dependencies outside this public repository.

@@ -5,7 +5,7 @@ This repository holds reusable skills, plugins, and scripts.
 - Put each skill in `skills/<skill-name>/` with a `SKILL.md` entrypoint. Keep its references, assets, metadata, and exclusive helpers within that folder.
 - Put authored or customized plugins in `plugins/<plugin-name>/`, following the plugin platform's required manifest and structure.
 - Put independent or shared utilities in `scripts/`. Prefer existing platform features and standard libraries; add dependencies only when needed.
-- Create directories only when they contain a useful resource. Do not add placeholder files for planned categories.
+- Keep `plugins/` and `scripts/` tracked with `.gitkeep` until their first resources are added. Remove each placeholder when adding content. Create other directories only as needed.
 - Update the README catalog and installation instructions when resources are added, moved, or removed.
 - Keep personal evidence, secrets, generated artifacts, and installed dependencies out of commits. Use synthetic examples when needed.
 - Preserve relative links within skills so each skill remains portable.

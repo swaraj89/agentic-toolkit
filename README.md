@@ -15,7 +15,7 @@ My frequently used skills, plugins, and scripts for working with AI agents.
 - `scripts/`: Standalone utilities and helpers shared across resources.
 - [AGENTS.md](AGENTS.md): Conventions for maintaining this repository.
 
-Create plugin and script directories when their first resources are added. Keep helpers used by only one skill inside that skill.
+The plugin and script directories contain `.gitkeep` files so Git tracks them before resources are added. Remove each placeholder when adding content. Keep helpers used by only one skill inside that skill.
 
 ## Install a skill
 

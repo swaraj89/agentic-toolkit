@@ -11,9 +11,12 @@ Help the employee present a strong, credible account of their contributions to t
 
 Before drafting, ask for missing information in one short batch. Reuse information already supplied in the conversation or files; confirm ambiguous details instead of asking again.
 
-- What is your current role, level, and area of responsibility?
+- What is your current position or job title, level, and role? Describe your main responsibilities.
 - What does your manager expect at this level? Include agreed goals, success measures, and company values or review criteria if available.
 - What dates does this review cover, and which Markdown files should I use? Include any word or character limit.
+- Is there anything additional you want to highlight, especially work or recognition not captured in the files? Examples include extra responsibilities, mentoring, customer appreciation, or a difficult problem you solved.
+
+Treat the user's additional examples as evidence supplied in the conversation. Ask for the specific contribution and result when needed, and include supported details in the evidence map. Do not require a Markdown file for every additional example.
 
 Do not infer role or expectations from job titles, commit volume, or ticket counts. If the user does not know the formal expectations, ask for their main responsibilities and manager priorities. With their agreement, use these as the working basis; do not present them as an official rubric. You can organize evidence while waiting for answers.
 

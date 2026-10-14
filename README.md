@@ -42,7 +42,7 @@ The installed copy is independent of this checkout. After pulling updates, revie
 
 ## Year-End Performance Review
 
-The skill asks for your role, expectations, review dates, and Markdown evidence. It accepts Git history, Jira tickets, appreciation emails, and work notes. It distinguishes individual contributions from team results and avoids invented metrics.
+The skill asks one question at a time, adapting to your answers and skipping information already supplied. It covers your role, expectations, review purpose, manager priorities, role changes, review dates, and Markdown evidence. After reading the files, it asks targeted questions about missing impact and offers a revision round after the first draft. It accepts Git history, Jira tickets, appreciation emails, and work notes. It distinguishes individual contributions from team results and avoids invented metrics.
 
 ```text
 Use $year-end-performance-review to write my year-end review.

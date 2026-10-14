@@ -1,81 +1,121 @@
 # Agentic Toolkit
 
-My frequently used skills, plugins, and scripts for working with AI agents.
+A personal collection of reusable agent skills, plugins, and scripts.
 
 ## Catalog
 
 | Resource | Type | Purpose |
 | --- | --- | --- |
-| [Year-End Performance Review](skills/year-end-performance-review/SKILL.md) | Codex skill | Turn Markdown evidence into positive, evidence-based What and How bullets with ASD-STE100-informed wording. |
-| [perf-review](skills/perf-review/SKILL.md) | Skill alias | Short invocation for the year-end performance review skill; requires the canonical skill. |
-| [yearend](skills/yearend/SKILL.md) | Skill alias | Alternate short invocation for the same review workflow. |
-| [ye](skills/ye/SKILL.md) | Skill alias | Two-letter invocation for the same review workflow. |
+| [Year-End Performance Review](skills/year-end-performance-review/SKILL.md) | Agent skill | Turn Markdown evidence into a positive, evidence-based self-review with separate What and How bullets. |
 
-## Structure
+## Repository structure
 
-- `skills/<skill-name>/`: Self-contained skills, including their references, assets, and skill-specific scripts.
-- `plugins/<plugin-name>/`: Authored or customized plugins, each using its required manifest and package layout.
-- `scripts/`: Standalone utilities and helpers shared across resources.
-- [AGENTS.md](AGENTS.md): Conventions for maintaining this repository.
+- `skills/<skill-name>/`: Skills and their references, scripts, and metadata.
+- `plugins/<plugin-name>/`: Plugins and their manifests.
+- `scripts/`: Standalone and shared utilities.
+- [AGENTS.md](AGENTS.md): Repository conventions.
 
-The plugin and script directories contain `.gitkeep` files so Git tracks them before resources are added. Remove each placeholder when adding content. Keep helpers used by only one skill inside that skill.
+## Use the skill in VS Code
 
-## Install a skill
+The skill works with **Codex**, **Claude Code**, and **GitHub Copilot** in VS Code. It reads Markdown evidence files in the workspace you open. The personal setup below keeps the toolkit checkout in one place and links the canonical skill into each agent's skill directory.
 
-Clone this repository into a location you use for source repositories:
+### 1. Clone the toolkit
+
+Open VS Code, choose **Terminal → New Terminal**, then run:
 
 ```sh
+mkdir -p ~/Developer/Projects
+cd ~/Developer/Projects
 git clone https://github.com/swaraj89/agentic-toolkit.git
-cd agentic-toolkit
 ```
 
-Copy the desired skill into your personal Codex skills directory. Run these commands from the repository root:
+If you have already cloned it, update it instead:
 
 ```sh
-skill_target="${CODEX_HOME:-$HOME/.codex}/skills"
-mkdir -p "$skill_target"
-if [ -e "$skill_target/year-end-performance-review" ]; then
-  echo 'Skill already exists. Review or back up the existing folder before replacing it.'
-else
-  cp -R skills/year-end-performance-review "$skill_target/"
-fi
+cd ~/Developer/Projects/agentic-toolkit
+git pull --ff-only
 ```
 
-The installed copy is independent of this checkout. After pulling updates, review the changes and replace the installed copy when ready.
+### 2. Link the skill for each agent
 
-## Short aliases
-
-Use `$perf-review`, `$yearend`, or `$ye` for the same workflow as `$year-end-performance-review`. Each alias loads the canonical skill instead of duplicating its instructions. Install the canonical skill and your preferred aliases together.
-
-For a linked installation on another Mac, run this from the repository root after `git pull --ff-only`:
+Run this once in the terminal. It creates a link only when the destination does not already exist:
 
 ```sh
-mkdir -p "$HOME/.agents/skills"
-for skill_name in year-end-performance-review perf-review yearend ye; do
-  if [ -e "$HOME/.agents/skills/$skill_name" ] || [ -L "$HOME/.agents/skills/$skill_name" ]; then
-    echo "Already installed: $skill_name (check its target before replacing it)"
+repo="$HOME/Developer/Projects/agentic-toolkit"
+mkdir -p "$HOME/.agents/skills" "$HOME/.claude/skills"
+
+for destination in "$HOME/.agents/skills" "$HOME/.claude/skills"; do
+  link="$destination/year-end-performance-review"
+  if [ -e "$link" ] || [ -L "$link" ]; then
+    echo "Already exists: $link (check it before replacing it)"
   else
-    ln -s "$PWD/skills/$skill_name" "$HOME/.agents/skills/$skill_name"
+    ln -s "$repo/skills/year-end-performance-review" "$link"
   fi
 done
 ```
 
-These links use the checked-out files directly, so future pulls update all linked skills. If you use the copy installation above instead, also copy your preferred alias folders into the same skills directory and refresh the installed copies after updates.
+Codex and GitHub Copilot can discover personal skills under `~/.agents/skills/`. Claude Code uses `~/.claude/skills/`. The link points to the toolkit checkout, so after `git pull --ff-only` the skill changes are available without copying the skill again. [Codex skill locations](https://learn.chatgpt.com/docs/build-skills) · [GitHub Copilot skill locations](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) · [Claude Code skills](https://docs.anthropic.com/en/docs/claude-code/skills)
 
-## Year-End Performance Review
+### 3. Open your review evidence
 
-The skill asks one question at a time, adapting to your answers and skipping information already supplied. It covers your role, expectations, review purpose, manager priorities, role changes, review dates, and Markdown evidence. After reading the files, it asks targeted questions about missing impact and offers a revision round after the first draft. It accepts Git history, Jira tickets, appreciation emails, and work notes. It distinguishes individual contributions from team results and avoids invented metrics.
+In VS Code, choose **File → Open Folder** and open the folder that contains your review Markdown files. Keep those files outside this public toolkit repository. For example:
 
 ```text
-Use $perf-review to write my year-end review.
-Read evidence/commits.md, evidence/tickets.md, and evidence/appreciation.md.
-Ask me for my current role and expectations before drafting.
+performance-review/
+├── commits.md
+├── jira-tickets.md
+└── appreciation.md
 ```
 
-The final output is plain text with separate What and How bullet lists. You can supply company values, performance criteria, and a word limit.
+The skill can only use files available to the agent in its current workspace. If the evidence is in a different folder, open that folder in VS Code or copy the relevant Markdown files into your private review folder.
 
-Its writing style adapts ASD-STE100 clarity principles; it does not include the controlled dictionary or certify full compliance. It is not affiliated with or endorsed by ASD. See the [research notes](skills/year-end-performance-review/references/research-notes.md) for sources.
+### 4. Start a chat and invoke the skill
 
-## Repository scope
+Open your agent's VS Code panel and start a chat. The Codex extension is available from the Codex icon; if needed, run **Codex: Open Codex Sidebar** from the Command Palette. [Codex IDE setup](https://learn.chatgpt.com/docs/codex/ide)
 
-Store reusable instructions and tools here. Keep personal performance evidence, credentials, generated output, and installed dependencies outside this public repository.
+**Codex:**
+
+```text
+Use $year-end-performance-review to write my year-end review from the Markdown files in this workspace. Ask me one question at a time.
+```
+
+**Claude Code:**
+
+```text
+Use the year-end-performance-review skill to write my year-end review from the Markdown files in this workspace. Ask me one question at a time.
+```
+
+**GitHub Copilot Chat:**
+
+```text
+Use the year-end-performance-review skill to write my year-end review from the Markdown files in this workspace. Ask me one question at a time.
+```
+
+The skill asks about your role and expectations, the review purpose and period, and what you want to highlight. It reviews the evidence, asks targeted follow-up questions about impact, and returns plain-text What and How bullet lists. If the skill does not appear after setup, restart VS Code and start a new chat.
+
+### 5. Pull updates later
+
+The setup uses a symbolic link to the repository, so future updates only require:
+
+```sh
+cd ~/Developer/Projects/agentic-toolkit
+git pull --ff-only
+```
+
+## Setup overview
+
+```mermaid
+flowchart LR
+    A[GitHub: agentic-toolkit] -->|git clone / git pull| B[Local toolkit checkout]
+    B -->|symlink| C[Codex and Copilot: ~/.agents/skills]
+    B -->|symlink| D[Claude Code: ~/.claude/skills]
+    E[Private Markdown evidence] -->|open as VS Code workspace| F[Agent chat]
+    C --> F
+    D --> F
+```
+
+## About the review wording
+
+The skill adapts clarity principles from ASD-STE100 for performance reviews. It does not include the controlled dictionary or certify full compliance, and it is not affiliated with or endorsed by ASD. See the [research notes](skills/year-end-performance-review/references/research-notes.md).
+
+Keep personal review evidence, credentials, generated output, and installed dependencies outside this public repository.

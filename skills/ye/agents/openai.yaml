@@ -1,0 +1,4 @@
+interface:
+  display_name: "Performance Review (ye)"
+  short_description: "Short alias for the year-end performance review skill"
+  default_prompt: "Use $ye to write my review from Markdown evidence, asking one question at a time."

@@ -7,6 +7,9 @@ My frequently used skills, plugins, and scripts for working with AI agents.
 | Resource | Type | Purpose |
 | --- | --- | --- |
 | [Year-End Performance Review](skills/year-end-performance-review/SKILL.md) | Codex skill | Turn Markdown evidence into positive, evidence-based What and How bullets with ASD-STE100-informed wording. |
+| [perf-review](skills/perf-review/SKILL.md) | Skill alias | Short invocation for the year-end performance review skill; requires the canonical skill. |
+| [yearend](skills/yearend/SKILL.md) | Skill alias | Alternate short invocation for the same review workflow. |
+| [ye](skills/ye/SKILL.md) | Skill alias | Two-letter invocation for the same review workflow. |
 
 ## Structure
 
@@ -40,12 +43,31 @@ fi
 
 The installed copy is independent of this checkout. After pulling updates, review the changes and replace the installed copy when ready.
 
+## Short aliases
+
+Use `$perf-review`, `$yearend`, or `$ye` for the same workflow as `$year-end-performance-review`. Each alias loads the canonical skill instead of duplicating its instructions. Install the canonical skill and your preferred aliases together.
+
+For a linked installation on another Mac, run this from the repository root after `git pull --ff-only`:
+
+```sh
+mkdir -p "$HOME/.agents/skills"
+for skill_name in year-end-performance-review perf-review yearend ye; do
+  if [ -e "$HOME/.agents/skills/$skill_name" ] || [ -L "$HOME/.agents/skills/$skill_name" ]; then
+    echo "Already installed: $skill_name (check its target before replacing it)"
+  else
+    ln -s "$PWD/skills/$skill_name" "$HOME/.agents/skills/$skill_name"
+  fi
+done
+```
+
+These links use the checked-out files directly, so future pulls update all linked skills. If you use the copy installation above instead, also copy your preferred alias folders into the same skills directory and refresh the installed copies after updates.
+
 ## Year-End Performance Review
 
 The skill asks one question at a time, adapting to your answers and skipping information already supplied. It covers your role, expectations, review purpose, manager priorities, role changes, review dates, and Markdown evidence. After reading the files, it asks targeted questions about missing impact and offers a revision round after the first draft. It accepts Git history, Jira tickets, appreciation emails, and work notes. It distinguishes individual contributions from team results and avoids invented metrics.
 
 ```text
-Use $year-end-performance-review to write my year-end review.
+Use $perf-review to write my year-end review.
 Read evidence/commits.md, evidence/tickets.md, and evidence/appreciation.md.
 Ask me for my current role and expectations before drafting.
 ```
